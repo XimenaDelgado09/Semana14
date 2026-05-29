@@ -1,0 +1,235 @@
+INDEX.HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard del Tour - Metallica</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen p-8">
+<h1 class="text-4xl font-bold text-center text-red-500 mb-10">
+Dashboard del Tour - Metallica
+</h1>
+<section class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10">
+<h2 class="text-2xl font-bold mb-5 text-red-400">
+Etapa 1: La Taquilla VIP
+</h2>
+<form id="formCompra" class="space-y-5">
+<div>
+<label class="block mb-2">
+Nombre en el Gafete VIP
+</label>
+<input
+type="text"
+id="nombre"
+class="w-full p-3 rounded bg-gray-800 border border-gray-700"
+placeholder="Escribe tu nombre"
+>
+<small id="contador" class="text-gray-400">
+0/20 caracteres
+</small>
+</div>
+<div>
+<label class="block mb-2">
+Zona
+</label>
+<select
+id="zona"
+class="w-full p-3 rounded bg-gray-800 border border-gray-700"
+>
+<option value="0">Selecciona una zona</option>
+<option value="100">General</option>
+<option value="300">Gradas</option>
+<option value="500">Snake Pit VIP</option>
+</select>
+</div>
+<div>
+<span class="text-xl font-bold">
+Precio Total:
+</span>
+<span id="precio" class="text-green-400 text-xl">
+$0
+</span>
+</div>
+<button
+type="submit"
+class="w-full bg-red-600 hover:bg-red-700 p-4 rounded-xl text-xl font-bold
+transition"
+>
+</button>
+</form>
+</section>
+<section class="bg-gray-900 p-6 rounded-2xl shadow-lg mb-10">
+<h2 class="text-2xl font-bold mb-5 text-yellow-400">
+Etapa 2: Soundboard de Kirk Hammett
+</h2>
+<div class="grid grid-cols-2 gap-4">
+<button class="efecto bg-gray-700 p-5 rounded-xl font-bold">
+Riff de Guitarra
+</button>
+<button class="efecto bg-gray-700 p-5 rounded-xl font-bold">
+Doble Bombo
+</button>
+<button class="efecto bg-gray-700 p-5 rounded-xl font-bold">
+Grito del Público
+</button>
+<button class="efecto bg-gray-700 p-5 rounded-xl font-bold">
+Fuego
+</button>
+</div>
+<div class="mt-5 bg-black p-4 rounded text-green-400">
+<span id="pantalla">
+Esperando efecto...
+</span>
+</div>
+<div class="mt-6">
+<label class="block mb-2">
+Nivel de Distorsión
+</label>
+<input
+type="range"
+id="distorsion"
+min="0"
+max="100"
+value="0"
+class="w-full"
+>
+<p id="nivelDistorsion" class="mt-2 text-yellow-300">
+Nivel de Distorsión: 0%
+</p>
+</div>
+</section>
+<section class="bg-gray-900 p-6 rounded-2xl shadow-lg">
+<h2 class="text-2xl font-bold mb-5 text-blue-400">
+Etapa 3: Inventario del Stage Manager
+</h2>
+<input
+type="text"
+id="busqueda"
+placeholder="Buscar equipo..."
+class="w-full p-3 rounded bg-gray-800 border border-gray-700 mb-5"
+>
+<ul id="listaEquipos" class="space-y-2">
+<li class="equipo cursor-pointer">Amplificador Marshall</li>
+<li class="equipo cursor-pointer">Batería Tama</li>
+<li class="equipo cursor-pointer">Bajo ESP</li>
+<li class="equipo cursor-pointer">Cables XLR</li>
+<li class="equipo cursor-pointer">Pirotecnia</li>
+<li class="equipo cursor-pointer">Púas</li>
+<li class="equipo cursor-pointer">Micrófonos Shure</li>
+<li class="equipo cursor-pointer">Consola de Audio</li>
+<li class="equipo cursor-pointer">Luces LED</li>
+<li class="equipo cursor-pointer">Monitores de Escenario</li>
+</ul>
+</section>
+<script>
+const nombre = document.getElementById("nombre");
+const contador = document.getElementById("contador");
+nombre.addEventListener("input", () => {
+const longitud = nombre.value.length;
+contador.textContent =
+`${longitud}/20 caracteres`;
+if (longitud > 20) {
+contador.classList.add("text-red-500");
+} else {
+contador.classList.remove("text-red-500");
+}
+});
+const zona =
+document.getElementById("zona");
+const precio =
+document.getElementById("precio");
+zona.addEventListener("change", () => {
+precio.textContent =
+`$${zona.value}`
+;
+});
+// CLICK
+const form =
+document.getElementById("formCompra");
+form.addEventListener("submit", (event) => {
+event.preventDefault();
+if (
+nombre.value.trim() ===
+""
+) {
+alert(
+" Error: El nombre no puede estar vacío"
+);
+} else {
+alert(
+" Compra realizada con éxito"
+);
+}
+});
+const botones =
+document.querySelectorAll(".efecto");
+const pantalla =
+document.getElementById("pantalla");
+botones.forEach((boton) => {
+boton.addEventListener("click", () => {
+boton.classList.toggle(
+"bg-yellow-400"
+);
+pantalla.textContent =
+`Reproduciendo: ${boton.textContent}`
+;
+});
+});
+const distorsion =
+document.getElementById("distorsion");
+const nivel =
+document.getElementById(
+"nivelDistorsion"
+);
+distorsion.addEventListener(
+"input",
+() => {
+nivel.textContent =
+`Nivel de Distorsión: ${distorsion.value}%`;
+}
+);
+const buscador =
+document.getElementById("busqueda");
+const equipos =
+document.querySelectorAll(".equipo");
+// INPUT BUSCADOR
+buscador.addEventListener(
+"input",
+() => {
+const texto =
+buscador.value.toLowerCase();
+equipos.forEach(
+(equipo) => {
+const nombreEquipo =
+equipo.textContent.toLowerCase();
+if (
+nombreEquipo.includes(texto)
+) {
+equipo.style.display =
+"block";
+} else {
+equipo.style.display =
+"none";
+}
+}
+);
+}
+);
+equipos.forEach((equipo) => {
+equipo.addEventListener(
+"click",
+() => {
+equipo.classList.toggle(
+"text-green-500"
+);
+equipo.classList.toggle(
+"line-through"
+);
+}
+);
+});
+</script>
+</body>
+</html
